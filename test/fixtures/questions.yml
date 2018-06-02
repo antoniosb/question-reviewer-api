@@ -1,0 +1,22 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyText
+  source: MyString
+  year: 2010
+  status: P
+  user: one
+
+two:
+  content: MyText
+  source: MyString
+  year: 2015
+  status: A
+  user: two
+
+zQuestion:
+  content: MyText
+  source: MyString
+  year: 2010
+  status: R
+  user: one
