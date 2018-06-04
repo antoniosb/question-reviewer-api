@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_request
   def initialize
     @service = QuestionService.new
   end  

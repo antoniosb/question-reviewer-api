@@ -15,6 +15,10 @@ class QuestionsControllerTest  < ActionDispatch::IntegrationTest
 
     @valid_question = { :content => "Nova", :source => "Source", :year => 2000, :alternatives => alternatives }
   end
+  test "should get auth error" do
+    get questions_url
+    assert_response 401
+  end
   test "should get only my questions" do
     get questions_url, headers: authenticated_header
     assert_response :success

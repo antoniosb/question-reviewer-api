@@ -9,18 +9,18 @@ class ActiveSupport::TestCase
   fixtures :all
 
   def authenticated_header
-    token = Knock::AuthToken.new(payload: { sub: users(:one).id }).token
+    token = JsonWebToken.encode(users(:one).id)
 
     {
-      'Authorization': "Bearer #{token}"
+      'Authorization': "#{token}"
     }
   end
 
   def authenticated_header_admin
-    token = Knock::AuthToken.new(payload: { sub: users(:two).id }).token
+    token = JsonWebToken.encode(users(:two).id)
 
     {
-      'Authorization': "Bearer #{token}"
+      'Authorization': "#{token}"
     }
   end
 
