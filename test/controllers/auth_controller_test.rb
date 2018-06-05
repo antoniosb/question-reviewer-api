@@ -8,6 +8,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
 
   test "should get authorized" do 
     post auth_token_url, :params => { :login => "login1", :password => "secret" }
+    assert_equal "login1", json_response["user"]["login"]
     assert_response :success
   end
 end
