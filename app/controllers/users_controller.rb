@@ -3,6 +3,7 @@ class UsersController < ApplicationController
     @service = UserService.new
   end  
   def create
-    render json: @service.create(params), status: 201
+    user = @service.create(params)
+    render json: { :user => user, :token => JsonWebToken.encode(user.id) }, status: 201
   end
 end
