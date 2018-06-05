@@ -20,3 +20,10 @@ zQuestion:
   year: 2010
   status: R
   user: one
+
+pendent2:
+  content: MyText
+  source: MyString
+  year: 2010
+  status: P
+  user: one

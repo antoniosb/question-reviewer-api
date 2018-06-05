@@ -3,9 +3,10 @@ require 'test_helper'
 class QuestionsControllerTest  < ActionDispatch::IntegrationTest
   def after_setup
     get questions_url, headers: authenticated_header_admin
-    @other_question_id = json_response[0]["id"]
-    @my_question_id = json_response[2]["id"]
-    @my_reproved_question_id = json_response[1]["id"]
+    @other_question_id = json_response[1]["id"]
+    @my_question_id = json_response[0]["id"]
+    @my_reproved_question_id = json_response[2]["id"]
+    @other_pendent_question_id = json_response[3]["id"]
     alternatives = Array.new
     alternatives << { :content => "Option 1", :is_correct => false }
     alternatives << { :content => "Option 2", :is_correct => false }
@@ -22,20 +23,20 @@ class QuestionsControllerTest  < ActionDispatch::IntegrationTest
   test "should get only my questions" do
     get questions_url, headers: authenticated_header
     assert_response :success
-    assert_equal 2, json_response.length
+    assert_equal 3, json_response.length
     assert_equal "login1", json_response[0]["user"]["login"]
   end
 
   test "should get all questions" do
     get questions_url, headers: authenticated_header_admin
     assert_response :success
-    assert_equal 3, json_response.length
+    assert_equal 4, json_response.length
   end
 
   test "should get questions by status 'Pendente'" do
     get "/questions?status=P", headers: authenticated_header_admin
     assert_response :success
-    assert_equal 1, json_response.length
+    assert_equal 2, json_response.length
   end
 
   test "should get questions by status 'Aprovado'" do
@@ -142,13 +143,13 @@ class QuestionsControllerTest  < ActionDispatch::IntegrationTest
   end
 
   test "should get error on review without comment" do
-    post "/questions/#{@my_question_id}/revisions", headers: authenticated_header_admin, :params => { :status => "A" }
+    post "/questions/#{@my_question_id}/revisions", headers: authenticated_header_admin, :params => { :status => "R" }
     assert_response 400
     assert_equal 1, json_response["comment"].length
   end
 
-  test "should get success on review question" do
-    post "/questions/#{@my_question_id}/revisions", headers: authenticated_header_admin, :params => { :status => "R", :comment => "Comment" }
+  test "should get success on repprove question" do
+    post "/questions/#{@my_question_id}/revisions", headers: authenticated_header_admin, :params => { :status => "R", :comment => "comment" }
     assert_response :success
     assert_equal "R", json_response["status"]
   end
@@ -174,5 +175,11 @@ class QuestionsControllerTest  < ActionDispatch::IntegrationTest
   test "should get success on update reproved question" do
     put "/questions/#{@my_reproved_question_id}", headers: authenticated_header, :params => @valid_question
     assert_response 200
+  end
+
+  test "should get success on approve question" do
+    post "/questions/#{@other_pendent_question_id}/revisions", headers: authenticated_header_admin, :params => { :status => "A" }
+    assert_response :success
+    assert_equal "A", json_response["status"]
   end
 end
