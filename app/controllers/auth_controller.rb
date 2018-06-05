@@ -7,7 +7,7 @@ class AuthController < ApplicationController
     if !user
       render status: 401
     else
-      render json: { :token => JsonWebToken.encode(user.id) }, status: :ok
+      render json: { :user => user, :token => JsonWebToken.encode(user.id) }, status: :ok
     end
   end
 end

@@ -1,12 +1,12 @@
 class QuestionService
   def list_by_status_and_user status, user
-    questions = Question.includes(:question_alternatives, :question_revisions).order('updated_at DESC')
+    questions = Question.includes(:user, :question_alternatives, :question_revisions).order('updated_at DESC')
     questions = questions.where('status = ?', [status]) unless status == nil
     questions = questions.where('user_id = ?', [user.id]) unless user.is_admin
     questions
   end
   def show id, user
-    question = Question.includes(:question_alternatives, :question_revisions).find(id)
+    question = Question.includes(:user, :question_alternatives, :question_revisions).find(id)
     raise ForbiddenException.new unless user.is_admin || question.user_id == user.id
     question
   end

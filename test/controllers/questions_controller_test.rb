@@ -23,6 +23,7 @@ class QuestionsControllerTest  < ActionDispatch::IntegrationTest
     get questions_url, headers: authenticated_header
     assert_response :success
     assert_equal 2, json_response.length
+    assert_equal "login1", json_response[0]["user"]["login"]
   end
 
   test "should get all questions" do
@@ -53,6 +54,7 @@ class QuestionsControllerTest  < ActionDispatch::IntegrationTest
     url = "/questions/#{@my_question_id}"
     get url, headers: authenticated_header
     assert_response :success
+    assert_equal "login1", json_response["user"]["login"]
   end
 
   test "should get error on get question of other user" do
