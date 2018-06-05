@@ -27,9 +27,14 @@ class QuestionService
       question.status = status
       question.save!
 
+      comment = obj[:comment]
+      if status === "A"
+        comment = "Aprovada"
+      end
+
       revision = QuestionRevision.new
       revision.user = user
-      revision.comment = obj[:comment]
+      revision.comment = comment
       revision.question = question
 
       if !revision.save
