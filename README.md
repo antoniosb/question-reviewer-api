@@ -1,24 +1,27 @@
-# README
+## API Question Reviewer
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Version
+ * Ruby (2.5.1)
 
-Things you may want to cover:
+# Dependencies
+ * Bundler
+    ```
+    gem install bundler
+ * Rails
+    ```
+    gem install rails
+ * Install Gems
+    ```
+    bundle install
 
-* Ruby version
+# Database creation
+    rake db:migration
+    
+# Database initialization
+    rake db:seed
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Run tests
+    rake
+    
+# Init dev server
+    rails s
